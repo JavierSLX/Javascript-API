@@ -28,7 +28,41 @@ app.use('/users', usersRouter);
 
 //Peticion GET para mostrar todos los usuarios
 app.get('/usuarios', (request, respond) => {
-  usuario.getUsuario(request, respond);
+  
+  //Checa si es personalizada (.../usuario?id=1) o general
+  let peticiones = request.query;
+  let id = peticiones.id; 
+  
+  if(id)
+    usuario.getUsuario(id, request, respond);
+  //Si el objeto de peticiones viene vacio
+  else if(Object.keys(peticiones).length == 0)
+    usuario.getUsuarios(request, respond);
+  else
+    respond.end("No valido");
+  
+});
+
+//Peticion POST para mostrar un usuario
+app.post('/usuario', (request, respond) => {
+  
+  let peticiones = request.body;
+  let id = peticiones.id;
+
+  if(id)
+    usuario.getUsuario(id, request, respond);
+  //Si el objeto de peticiones viene vacio
+  else if(Object.keys(peticiones).length == 0)
+    usuario.getUsuarios(request, respond);
+  else
+    respond.end("No valido");
+});
+
+//Peticion POST para insertar un usuario
+app.post('/insertarUsuario', (request, respond) => {
+  let persona = request.body;
+
+  usuario.setUsuario(persona, request, respond);
 });
 
 //___________________________________________________________________________
