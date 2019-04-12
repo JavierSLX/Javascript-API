@@ -63,8 +63,33 @@ function insertarUsuario(usuario, callback)
 
         callback(resultado);
     });
+
+    connection.end();
+}
+
+//Actualiza un usuario ya registrado
+function actualizarUsuario(usuario, callback)
+{
+    //Crea la conexion
+    let connection = mysql.createConnection(constants.connectionObject);
+    connection.connect((error) => {
+        if(error)
+            throw error;
+    });
+
+    //Arma la peticion, la realiza y regresa un resultado por asincronismo
+    let actualizar = "UPDATE usuario SET nombre = ? WHERE id = ?";
+    connection.query(actualizar, [usuario.nombre, usuario.id], (error, resultado) => {
+        if(error)
+            throw error;
+
+        callback(resultado);
+    });
+
+    connection.end();
 }
 
 exports.obtenerUsuarios = obtenerUsuarios;
 exports.obtenerUsuario = obtenerUsuario;
 exports.insertarUsuario = insertarUsuario;
+exports.actualizarUsuario = actualizarUsuario;

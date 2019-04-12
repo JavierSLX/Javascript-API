@@ -41,6 +41,26 @@ function setUsuario(usuario, request, respond)
     });
 }
 
+//Vista que actualiza un usuario
+function updateUsuario(usuario, request, respond)
+{
+    dao.actualizarUsuario(usuario, (resultado) => {
+        //Imprime el resultado de la consulta
+        respond.set({'content-type': 'application/json; charset=utf-8'});
+
+        //Si actualizo correctamente regresa los elementos que actualizo
+        let elemento = new Object();
+        if(resultado.changedRows > 0)
+        {
+            elemento.changedRows = resultado.changedRows;
+            respond.end(JSON.stringify(elemento));
+        }
+        else
+            respond.end();
+    });
+}
+
 exports.getUsuarios = getUsuarios;
 exports.getUsuario = getUsuario;
 exports.setUsuario = setUsuario;
+exports.updateUsuario = updateUsuario;

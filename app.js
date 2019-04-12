@@ -65,6 +65,12 @@ app.post('/insertarUsuario', (request, respond) => {
   usuario.setUsuario(persona, request, respond);
 });
 
+//Peticion POST para actualizar un usuario
+app.post('/actualizarUsuario', (request, respond) => {
+  let persona = request.body;
+  usuario.updateUsuario(persona, request, respond);
+});
+
 //___________________________________________________________________________
 
 // catch 404 and forward to error handler
